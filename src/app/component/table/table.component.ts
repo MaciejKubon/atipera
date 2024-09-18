@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {MatTableModule} from '@angular/material/table';
 import { PeriodicElement } from '../../interface/dataInterface';
 import {LoadingDataService} from '../../service/loading-data.service'
+import { SpinerComponent } from '../spiner/spiner.component';
 
 const ELEMENT_DATA: PeriodicElement[] = [
   {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
@@ -19,7 +20,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [MatTableModule],
+  imports: [MatTableModule, SpinerComponent],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss'
 })
