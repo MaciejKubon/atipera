@@ -1,7 +1,8 @@
 
 
 @if(isLoading){
-    <h1>Loading data...</h1>
+    <div class="spiner"><app-spiner/></div>
+    
 }@else{
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
     <!-- Position Column -->
