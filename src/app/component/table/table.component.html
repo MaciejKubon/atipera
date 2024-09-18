@@ -1,4 +1,9 @@
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+
+
+@if(isLoading){
+    <h1>Loading data...</h1>
+}@else{
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
     <!-- Position Column -->
     <ng-container matColumnDef="demo-position">
       <th mat-header-cell *matHeaderCellDef> No. </th>
@@ -26,3 +31,4 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+}

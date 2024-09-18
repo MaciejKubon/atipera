@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import {MatTableModule} from '@angular/material/table';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
+import { PeriodicElement } from '../../interface/dataInterface';
+import {LoadingDataService} from '../../service/loading-data.service'
 
 const ELEMENT_DATA: PeriodicElement[] = [
   {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
@@ -31,6 +26,18 @@ const ELEMENT_DATA: PeriodicElement[] = [
 
 export class TableComponent {
   displayedColumns: string[] = ['demo-position', 'demo-name', 'demo-weight', 'demo-symbol'];
+  isLoading:boolean;
   dataSource = ELEMENT_DATA;
+  data: PeriodicElement[] = [];
+  constructor(private LoadingData: LoadingDataService){
+    this.isLoading = true;
+  }
+  ngOnInit() {
+    this.LoadingData.fetchData().subscribe(data => {
+      this.data = data;
+      this.isLoading=false;
+    });
+  }
+
 
 }
