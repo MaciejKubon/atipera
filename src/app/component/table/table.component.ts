@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import {MatTableModule} from '@angular/material/table';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { PeriodicElement } from '../../interface/dataInterface';
 import {LoadingDataService} from '../../service/loading-data.service'
 import { SpinerComponent } from '../spiner/spiner.component';
+import { DeleteButtonComponent } from '../delete-button/delete-button.component';
 
 const ELEMENT_DATA: PeriodicElement[] = [
   {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
@@ -20,25 +21,29 @@ const ELEMENT_DATA: PeriodicElement[] = [
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [MatTableModule, SpinerComponent],
+  imports: [MatTableModule, SpinerComponent, DeleteButtonComponent],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss'
 })
 
 export class TableComponent {
-  displayedColumns: string[] = ['demo-position', 'demo-name', 'demo-weight', 'demo-symbol'];
+  displayedColumns: string[] = ['demo-position', 'demo-name', 'demo-weight', 'demo-symbol','demo-delete'];
   isLoading:boolean;
   dataSource = ELEMENT_DATA;
-  data: PeriodicElement[] = [];
+  data!: MatTableDataSource<PeriodicElement>;
   constructor(private LoadingData: LoadingDataService){
     this.isLoading = true;
   }
   ngOnInit() {
     this.LoadingData.fetchData().subscribe(data => {
-      this.data = data;
+      this.data = new MatTableDataSource<PeriodicElement>(data);
       this.isLoading=false;
     });
   }
-
+  deleteRow(id:number)
+  {
+    this.data.data.splice(id,1);
+    this.data._updateChangeSubscription();
+  }
 
 }
